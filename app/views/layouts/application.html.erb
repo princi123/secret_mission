@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SecretMission</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container-narrow">
+      <div class="masthead">
+        <% if current_user.present? %>
+          <% if can? :index, SecretCode %>
+            <%= link_to 'Secret Codes(You can access)', secret_codes_path, class: 'btn btn-lg btn-primary' %>
+            <%= link_to 'Back', root_path, class: 'btn btn-lg btn-primary pull-right ' unless params[:controller] == 'home' %>
+          <% else %>
+            <%= link_to 'Secret Codes(Accessed by Admins)', {}, class: 'btn btn-lg btn-primary' %>
+          <% end %>
+        <% else %>
+          <%= link_to "Secret Code Mission", root_path, class: 'btn btn-lg btn-primary' %>
+        <% end %> 
+      </div>
+      <hr />
+      <%= yield %>
+    </div>
+  </body>
+</html>
+
+
+

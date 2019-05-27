@@ -1,0 +1,50 @@
+<%- model_class = SecretCode -%>
+<div class="col-md-12">
+  <h1 class="col-md-9"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+
+  <div class="bulk_codes col-md-3">
+    <%= form_for @secret_code, :url => url_for(:controller => 'secret_codes', :action => 'bulk_code') do |f| %>
+      <div class="bulk_select">
+        <%= f.select(:bulk_number, [10, 20, 50, 100] ) %>
+      </div>
+      <%= f.submit 'Generate bulk secret codes', :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:code) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= 'Associted user'%></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @secret_codes.each do |secret_code| %>
+      <tr>
+        <td><%= link_to secret_code.id, secret_code_path(secret_code) %></td>
+        <td><%= secret_code.code %></td>
+        <td><%= date_time_format(secret_code.created_at) %></td>
+        <td><%= get_secret_code_user(secret_code) %></td>
+
+        <td>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      secret_code_path(secret_code),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_secret_code_path,
+            :class => 'btn btn-primary' %>
