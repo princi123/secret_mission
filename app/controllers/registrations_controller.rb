@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
+	### action overide to add secret code ##########
   def create
     build_resource(sign_up_params)
 

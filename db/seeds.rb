@@ -11,6 +11,10 @@
 User.new({ :email => 'user@example.com', :password => 'password', :password_confirmation => 'password'}).save
 
 
+#### To generate bulk secret codes ####
+SecretCode.create_bulk_codes(10)
+
+
 ## rake task to create multiple users ######
 user_array = []                                                         
 (1..4).each do |num|                                                       
@@ -19,10 +23,10 @@ end
 
 
 #### rake task to create admin user  ######## 
-
 user = User.new({ :email => 'admin@example.com', :password => 'password', :password_confirmation => 'password'})
 user.admin = true
 user.save
 
-#### To generate bulk secret codes ####
-SecretCode.create_bulk_codes(10)
+#### rake task to add association between user and secret code
+SecretCode.first.update(user_id: 1)
+SecretCode.last.update(user_id: 6)
