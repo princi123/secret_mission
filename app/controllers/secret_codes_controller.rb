@@ -2,8 +2,8 @@ class SecretCodesController < ApplicationController
 	before_action :find_secret_code, only: [ :destroy]
 
 	def index
-		@secret_codes = SecretCode.all
-		@secret_code = SecretCode.new
+		@secret_codes = SecretCode.all.order(:created_at)
+		@secret_code  = SecretCode.new
 		begin
 			authorize! :index, @secret_code
 		rescue CanCan::AccessDenied
