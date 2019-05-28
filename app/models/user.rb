@@ -6,5 +6,7 @@ class User < ApplicationRecord
 
   attr_accessor :code_secret
 
+  has_one :secret_code
+
 
 end
